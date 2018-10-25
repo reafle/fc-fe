@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { ChatControl } from './components/chat';
 import routes from './routes';
 import './App.css';
 
@@ -18,6 +19,7 @@ const Header = () => (
 const App = () => (
   <div className="App">
     <Header />
+    <ChatControl />
     {routes}
   </div>
 );
