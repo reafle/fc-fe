@@ -1,0 +1,22 @@
+.PostDetails {
+  border: 1px solid lightgray;
+  border-radius: 3px;
+  background-color: white;
+  padding: .8rem;
+  margin: .8rem;
+}
+
+.PostDetails-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.PostDetails-body {
+  color: #1D2129;
+  font-weight: 500;
+  text-align: left;
+  white-space: pre-line;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+}
