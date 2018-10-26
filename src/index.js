@@ -9,14 +9,30 @@ import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 
+import { createEpicMiddleware } from 'redux-observable';
+import { BehaviorSubject } from 'rxjs';
+import io from 'socket.io-client';
+import rootEpic from './epics';
+
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const store = createStore(
-  rootReducer,
-  composeEnhancers(applyMiddleware(thunk))
-);
+
+const socket$ = new BehaviorSubject(null);
+const epicMiddleware = createEpicMiddleware({ dependencies: { io, socket$ } });
+
+const initializeStore = () => {
+
+  const store = createStore(
+    rootReducer,
+    composeEnhancers(applyMiddleware(thunk, epicMiddleware))
+  );
+
+  epicMiddleware.run(rootEpic);
+
+  return store;
+} 
 
 ReactDOM.render(
-  <Provider store={store}>
+  <Provider store={initializeStore()}>
     <BrowserRouter>
       <App />
     </BrowserRouter>

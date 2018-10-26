@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+
+import { chat } from '../../actions';
 
 class ChatInput extends Component {
   state = {
@@ -13,6 +16,12 @@ class ChatInput extends Component {
   handleSubmit = (e) => {
     const { name } = this.props;
     const { value } = this.state;
+
+    if (!name) {
+      this.props.joinChannel(value);
+    } else {
+      this.props.sendMessage(value);
+    }
 
     this.setState({ value: '' });
 
@@ -33,8 +42,14 @@ class ChatInput extends Component {
   }
 }
 
+const mapStateToProps = (state) => ({
+  name: state.chat.user,
+})
 
-export default ChatInput;
+export default connect(mapStateToProps, {
+  joinChannel: chat.joinChannel,
+  sendMessage: chat.sendMessage,
+})(ChatInput);
 
 const style = {
   form: {

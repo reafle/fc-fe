@@ -1,11 +1,18 @@
 import React, { Component, Fragment } from 'react';
+import { connect } from 'react-redux';
 import ChatInput from './ChatInput';
 import ChatMessages from './ChatMessages';
+
+import { chat } from '../../actions';
 
 class ChatWindow extends Component {
   state = {
     loading: false,
   };
+
+  componentDidMount() {
+    this.props.connectToChat();
+  }
 
   render() {
     const { loading } = this.state;
@@ -24,7 +31,9 @@ class ChatWindow extends Component {
   }
 }
 
-export default ChatWindow;
+export default connect(null, {
+  connectToChat: chat.connect,
+})(ChatWindow);
 
 const style = {
   window: {
